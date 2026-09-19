@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   AUTH EMPIRE CORE — Design System
+   All CSS custom properties for dynamic theming
+   ============================================================ */
+
+@layer base {
+  :root {
+    /* Theme Engine Variables (updated by themeStore.ts) */
+    --glass-alpha: 0.12;
+    --glass-blur: 20px;
+    --glass-border-alpha: 0.18;
+    --tint-color: #4a6cf7;
+    --tint-alpha: 0.08;
+    --neon-color: #4a6cf7;
+    --neon-spread: 20px;
+    --neon-opacity: 0.7;
+    --accent-color: #bb86fc;
+    --bg-gradient: linear-gradient(135deg, #020010 0%, #0c0520 30%, #08031a 60%, #050215 100%);
+
+    /* Semantic tokens (HSL) */
+    --background: 260 50% 3%;
+    --foreground: 210 40% 98%;
+    --card: 260 40% 6%;
+    --card-foreground: 210 40% 98%;
+    --popover: 260 40% 6%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 230 91% 63%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 260 30% 12%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 260 30% 12%;
+    --muted-foreground: 215 20% 60%;
+    --accent: 283 70% 73%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 260 20% 20%;
+    --input: 260 20% 20%;
+    --ring: 230 91% 63%;
+    --radius: 0.75rem;
+
+    /* Sidebar */
+    --sidebar-background: 260 50% 5%;
+    --sidebar-foreground: 210 40% 90%;
+    --sidebar-primary: 230 91% 63%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 260 30% 12%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 260 20% 15%;
+    --sidebar-ring: 230 91% 63%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    @apply bg-background text-foreground;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Neon glow on interactive elements */
+  button:not([disabled]):hover,
+  a:hover {
+    --current-neon: var(--neon-color);
+  }
+
+  /* Custom range input */
+  input[type="range"] {
+    -webkit-appearance: none;
+    height: 6px;
+    border-radius: 9999px;
+    outline: none;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 8px rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+
+  /* Selection */
+  ::selection {
+    background: var(--neon-color, #4a6cf7);
+    color: white;
+    opacity: 0.8;
+  }
+}
+
+/* ============================================================
+   Glassmorphism utility
+   ============================================================ */
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, var(--glass-alpha, 0.08));
+    backdrop-filter: blur(var(--glass-blur, 20px));
+    -webkit-backdrop-filter: blur(var(--glass-blur, 20px));
+    border: 1px solid rgba(255, 255, 255, var(--glass-border-alpha, 0.12));
+  }
+
+  .neon-border {
+    box-shadow: 0 0 var(--neon-spread, 20px) var(--neon-color, #4a6cf7);
+  }
+
+  .neon-text {
+    text-shadow: 0 0 10px var(--neon-color, #4a6cf7), 0 0 20px var(--neon-color, #4a6cf7);
+    color: var(--neon-color, #4a6cf7);
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--neon-color, #4a6cf7), var(--accent-color, #bb86fc));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* ============================================================
+   Animation utilities
+   ============================================================ */
+@keyframes pulse-neon {
+  0%, 100% { box-shadow: 0 0 10px var(--neon-color)40; }
+  50%       { box-shadow: 0 0 25px var(--neon-color)80; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.animate-pulse-neon { animation: pulse-neon 2s ease-in-out infinite; }
+.animate-float      { animation: float 4s ease-in-out infinite; }
+.animate-spin-slow  { animation: spin-slow 8s linear infinite; }
